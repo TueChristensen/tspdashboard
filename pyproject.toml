@@ -13,6 +13,8 @@ streamlit = "^1.36.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.4"
+mypy = "^1.11.0"
+pytest = "^8.3.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -81,3 +83,20 @@ select = [
   # flake8-raise
   "RSE"
 ]
+
+ignore = ['ISC001']
+
+[tool.poetry.scripts]
+tspdashboard = "tspdashboard:main"
+
+
+[tool.mypy]
+
+disallow_untyped_defs = true
+show_error_codes = true
+no_implicit_optional = true
+warn_return_any = true
+warn_unused_ignores = true
+ignore_missing_imports = true
+
+exclude = ["scripts", "docs", "test"]
