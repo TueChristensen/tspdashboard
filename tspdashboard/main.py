@@ -8,7 +8,7 @@ import logging
 
 def main() -> None:
     """Main function for the streamlit app."""
-    st.title("# TSP Dashboard")
+    st.write("# TSP Dashboard")
     st.write(
         "Welcome to the TSP Dashboard! This dashboard is designed to help you "
         "visualize the performance of different algorithms on the "
@@ -17,24 +17,37 @@ def main() -> None:
         "please generate and optimize an instance using the buttons below."
     )
 
-    # Button for resetting the instance generated/optimized
-    should_reset = st.button("Reset", type="primary")
-
-    if should_reset:
-        st.session_state["instance"] = None
+    # Initialize the session state
+    st.session_state["instance"] = None
 
     # Add buttons to generate an instance
-    should_instance_be_generated = st.button("Generate Instance")
 
-    if should_instance_be_generated and st.session_state["instance"] is None:
-        instance = generate_instance(no_cities=10)
+    col1, col2, col3 = st.columns([1, 1, 1])
+
+    with col1:
+        st.write("Number of cities:")
+    with col2:
+        # Get the input from the user for the number of cities
+        no_cities = st.number_input(
+            "Number of cities",
+            placeholder="Number of cities",
+            min_value=2,
+            value=10,
+            max_value=50,
+            label_visibility="collapsed",
+        )
+    with col3:
+        should_instance_be_generated = st.button("Generate Instance")
+
+    if should_instance_be_generated:
+        instance = generate_instance(no_cities=int(no_cities))
         st.session_state["instance"] = instance
         logging.debug("Generated instance.")
         logging.debug(instance)
 
     if st.session_state["instance"] is not None:
-
-        col1, col2 = st.columns(2)
+        # Make the map column wider than the button column
+        col1, col2 = st.columns([3, 1])
 
         # Plot the instance as coordinates
         fig, ax = plt.subplots()
@@ -47,7 +60,14 @@ def main() -> None:
 
         with col2:
             # Add button for optimizing the instance
-            should_optimize = st.button("Greedy solution")
+            should_greedy_optimize = st.button("Greedy solution")
+
+            if should_greedy_optimize:
+                st.write("Greedy solution")
+                # Optimize the instance using the greedy algorithm
+                st.write("Greedy solution")
+                st.write("Total distance: 0")
+
 
 if __name__ == "__main__":
     main()

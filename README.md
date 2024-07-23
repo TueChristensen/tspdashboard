@@ -6,9 +6,7 @@ solve them using a variety of algorithms. The app will also display the solution
 ## Todo
 
 
-1. Make the function input to the number of cities
-1. Write a function to calculate the distance matrix and display it on the screen
-1. Make a solve button for the greedy algorithm 
+1. Make a solve button for the greedy algorithm and add algorithm
 1. Display the solution on the map
 1. Add option for exact algorithm and solve using it 
 1. Display two solutions on the map simultaneously
