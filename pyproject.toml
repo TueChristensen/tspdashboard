@@ -11,6 +11,7 @@ ortools = "^9.10.4067"
 streamlit = "^1.36.0"
 numpy = "^2.0.1"
 matplotlib = "^3.9.1"
+watchdog = "^4.0.1"
 
 
 [tool.poetry.group.dev.dependencies]

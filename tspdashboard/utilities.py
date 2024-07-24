@@ -1,12 +1,11 @@
 """Various utility functions for the TSP Dashboard application."""
 
-
 import numpy as np
 
 
 def generate_instance(no_cities: int = 10) -> np.ndarray:
     """Generates a new instance of the TSP problem with size of no_cities where all
-    cities have locations specified as (x,y) coordinates in the [0.0,1.0) range."""
+    cities have locations specified as (x,y) coordinates in the [0.0, 1.0) range."""
     gen = np.random.default_rng()
     return gen.random((no_cities, 2))
 
