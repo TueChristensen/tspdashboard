@@ -7,7 +7,7 @@ import numpy as np
 
 def greedy_algorithm(
     distance_matrix: np.ndarray, start_city: int = 0
-) -> Tuple[np.ndarray, float]:
+) -> Tuple[list[int], float]:
     """A simple greedy algorithm for the TSP problem.
 
     Args:
@@ -51,4 +51,4 @@ def greedy_algorithm(
     # Add the starting city to the end of the tour
     tour.append(tour[0])
 
-    return np.array(tour), total_distance
+    return tour, total_distance

@@ -15,10 +15,10 @@ def test_greedy_algorithm():
     tour, total_distance = greedy_algorithm(distance_matrix=distance_matrix)
 
     # Check that the tour is a numpy array
-    assert isinstance(tour, np.ndarray)
+    assert isinstance(tour, list)
 
     # Check that the tour has the correct shape
-    assert tour.shape == (4,)
+    assert len(tour) == 4
 
     # Check that the tour is [0, 1, 2, 0]
     assert np.array_equal(tour, np.array([0, 1, 2, 0]))
@@ -39,10 +39,10 @@ def test_greedy_starting_city():
     )
 
     # Check that the tour is a numpy array
-    assert isinstance(tour, np.ndarray)
+    assert isinstance(tour, list)
 
     # Check that the tour has the correct shape
-    assert tour.shape == (4,)
+    assert len(tour) == 4
 
     # Check that the tour is [1, 0, 2, 1]
     assert np.array_equal(tour, np.array([1, 0, 2, 1]))

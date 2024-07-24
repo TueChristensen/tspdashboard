@@ -1,6 +1,8 @@
 """This file contains the streamlit app for the TSP Dashboard."""
 
 import streamlit as st
+
+from tspdashboard.exact_mip_agorithm import exact_algorithm
 from tspdashboard.utilities import generate_instance, generate_distance_matrix
 from tspdashboard.greedy_algorithm import greedy_algorithm
 import matplotlib.pyplot as plt
@@ -10,6 +12,15 @@ import logging
 def clear_session_state() -> None:
     """Clear the session state."""
     st.session_state.clear()
+    st.session_state["exact_toggle"] = False
+    st.session_state["greedy_toggle"] = False
+
+
+def greedy_optimize_if_not_in_session_state() -> None:
+    """Run the greedy optimization algorithm if the solution is not in the session
+    state."""
+    if "greedy_solution" not in st.session_state:
+        greedy_optimize()
 
 
 def greedy_optimize() -> None:
@@ -34,6 +45,35 @@ def greedy_optimize() -> None:
     st.session_state["greedy_objective"] = greedy_objective
 
 
+def exact_optimize_if_not_in_session_state() -> None:
+    """Run the exact optimization algorithm if the solution is not in the session
+    state."""
+    if "exact_solution" not in st.session_state:
+        exact_optimize()
+
+
+def exact_optimize() -> None:
+    """Run the exact optimization algorithm."""
+    logging.info("Optimizing the instance using the exact algorithm.")
+
+    # If the distance matrix is not yet calculated, calculate it
+    if "instance_distance_matrix" not in st.session_state:
+        logging.info("Calculating the distance matrix.")
+        distance_matrix = generate_distance_matrix(st.session_state["instance"])
+        st.session_state["instance_distance_matrix"] = distance_matrix
+
+    exact_solution, exact_objective = exact_algorithm(
+        st.session_state["instance_distance_matrix"]
+    )
+
+    logging.info("Exact solution: %s", exact_solution)
+    logging.info("Greedy objective: %s", exact_objective)
+
+    # Write the info to the session state
+    st.session_state["exact_solution"] = exact_solution
+    st.session_state["exact_objective"] = exact_objective
+
+
 @st.experimental_fragment
 def map_and_solution_plot() -> None:
     """This is inside a fragment to re-draw the plot without re-running the whole
@@ -49,19 +89,45 @@ def map_and_solution_plot() -> None:
     ax.plot(instance[:, 0], instance[:, 1], "o")
 
     # If there is a greedy solution, plot it in red
-    if "greedy_solution" in st.session_state:
+    if (
+        "greedy_solution" in st.session_state
+        and st.session_state["greedy_solution"] is not None
+    ) and st.session_state["greedy_toggle"]:
         ax.plot(
             instance[st.session_state["greedy_solution"], 0],
             instance[st.session_state["greedy_solution"], 1],
             "r-",
         )
 
+    # If there is an exact solution, plot it in green
+    if (
+        "exact_solution" in st.session_state
+        and st.session_state["exact_solution"] is not None
+        and st.session_state["exact_toggle"]
+    ):
+        ax.plot(
+            instance[st.session_state["exact_solution"], 0],
+            instance[st.session_state["exact_solution"], 1],
+            "g-",
+        )
+
     with col1:
         st.pyplot(fig)
 
     with col2:
-        # Add button for optimizing the instance
-        st.button("Greedy solution", on_click=greedy_optimize)
+        # Add a button for optimizing the instance using the greedy algorithm
+        st.toggle(
+            "Greedy solution",
+            on_change=greedy_optimize_if_not_in_session_state,
+            key="greedy_toggle",
+        )
+
+        # Add a button for optimizing the instance using the exact algorithm
+        st.toggle(
+            "Exact solution",
+            on_change=exact_optimize_if_not_in_session_state,
+            key="exact_toggle",
+        )
 
 
 def main() -> None:
@@ -96,7 +162,7 @@ def main() -> None:
             label_visibility="collapsed",
         )
     with col3:
-        should_instance_be_generated = st.button("Generate Instance")
+        should_instance_be_generated = st.button("Generate Instance", key="generate")
 
     if should_instance_be_generated:
         # Clear the session state to remove old data
@@ -108,6 +174,9 @@ def main() -> None:
         logging.debug(instance)
 
     if st.session_state["instance"] is not None:
+        st.session_state["toggle_greedy"] = False
+        st.session_state["toggle_exact"] = False
+
         map_and_solution_plot()
 
 

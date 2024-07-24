@@ -5,9 +5,6 @@ solve them using a variety of algorithms. The app will also display the solution
 
 ## Todo
 
-
-1. Make a solve button for the greedy algorithm and add algorithm
-1. Display the solution on the map
-1. Add option for exact algorithm and solve using it 
-1. Display two solutions on the map simultaneously
-1. Combine the two solution buttons into one with a select box for the algorithm
+1. Add metrics for the greedy and optimal
+1. Add test for the main app
+1. Dockerize the app
