@@ -129,6 +129,32 @@ def map_and_solution_plot() -> None:
             key="exact_toggle",
         )
 
+    # Preferably the below would be separated into a different function, but the
+    # current st.experimental_fragment does not seem to allow for this.
+    if (
+        "greedy_objective" in st.session_state
+        and st.session_state["greedy_objective"] is not None
+        and "exact_objective" in st.session_state
+        and st.session_state["exact_objective"] is not None
+    ):
+        col1, col2 = st.columns(2)
+
+        # Calculate the difference between the greedy and exact solutions
+        difference = (
+            st.session_state["greedy_objective"] - st.session_state["exact_objective"]
+        )
+
+        # Calculate the percentage difference
+        percentage_difference = (difference / st.session_state["exact_objective"]) * 100
+
+        col1.metric("Exact Objective", f'{st.session_state["exact_objective"]:.2f}')
+        col2.metric(
+            "Greedy Objective",
+            f'{st.session_state["greedy_objective"]:.2f}',
+            delta=f"{percentage_difference:.2f} %",
+            delta_color="inverse",
+        )
+
 
 def main() -> None:
     """Main function for the streamlit app."""
