@@ -3,6 +3,7 @@
 This project is a streamlit app that will allow the user to generate (small) Travelling Salesperson Problems and 
 solve them using a variety of algorithms. The app will also display the solution on a map. 
 
+Host on Streamlit https://travellingsalesman.streamlit.app/
 
 ## How to run
 
