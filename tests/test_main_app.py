@@ -7,7 +7,7 @@ def test_app_workflow() -> None:
     """Main test that the app can run and 'correct' usage works."""
 
     # Load the app from the main module
-    at = AppTest.from_file("../tspdashboard/main.py")
+    at = AppTest.from_file("../tspdashboard/app.py")
 
     # Run the app and assert that it runs without errors
     at.run()
