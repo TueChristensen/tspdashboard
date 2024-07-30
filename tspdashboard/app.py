@@ -204,3 +204,7 @@ def main() -> None:
         st.session_state["toggle_exact"] = False
 
         map_and_solution_plot()
+
+
+if __name__ == "__main__":
+    main()
