@@ -88,6 +88,9 @@ def map_and_solution_plot() -> None:
     fig, ax = plt.subplots()
     ax.plot(instance[:, 0], instance[:, 1], "o")
 
+    # Drop the axis
+    ax.axis("off")
+
     # If there is a greedy solution, plot it in red
     if (
         "greedy_solution" in st.session_state
@@ -117,7 +120,7 @@ def map_and_solution_plot() -> None:
     with col2:
         # Add a button for optimizing the instance using the greedy algorithm
         st.toggle(
-            "Greedy solution",
+            "Greedy solution (nearest neighbor)",
             on_change=greedy_optimize_if_not_in_session_state,
             key="greedy_toggle",
         )
@@ -147,10 +150,13 @@ def map_and_solution_plot() -> None:
         # Calculate the percentage difference
         percentage_difference = (difference / st.session_state["exact_objective"]) * 100
 
-        col1.metric("Exact Objective", f'{st.session_state["exact_objective"]:.2f}')
+        col1.metric(
+            "Distance (exact solution)",
+            f'{st.session_state["exact_objective"]:.2f} ' f'kilometers',
+        )
         col2.metric(
-            "Greedy Objective",
-            f'{st.session_state["greedy_objective"]:.2f}',
+            "Distance (greedy solution)",
+            f'{st.session_state["greedy_objective"]:.2f} kilometers',
             delta=f"{percentage_difference:.2f} %",
             delta_color="inverse",
         )
@@ -159,13 +165,22 @@ def map_and_solution_plot() -> None:
 def main() -> None:
     """Main function for the streamlit app."""
     st.write("# TSP Dashboard")
-    st.write(
-        "Welcome to the TSP Dashboard! This dashboard is designed to help you "
-        "visualize the performance of different algorithms on the "
-        "travelling salesperson "
-        "problem. To get started, "
-        "please generate and optimize an instance using the buttons below."
-    )
+    st.write("""
+       The **Traveling Salesman Problem (TSP)** is a classic topic in **operations
+       research**, known for its wide range of **applications**. The fundamental
+       challenge is to determine the **shortest possible route** that allows a salesman
+       to visit a given set of **cities** and return to the starting point:truck:
+
+        This **app** allows users to generate a small instance of the TSP, displayed on
+        a **2D map**:globe_with_meridians: Users can solve the problem using either a
+        simple **greedy algorithm**, which selects the nearest unvisited city at each
+        step, or an **exact solution method**, which is practical only for smaller
+        instances due to **time constraints**:fire:
+
+        Technically, the city locations are generated randomly with coordinates
+        between 0 and 1. The exact algorithm uses a **Mixed Integer Programming (
+        MIP)** formulation of the problem and has a time limit which means it may not
+        provide the optimal solution for larger instances.""")
 
     if "instance" not in st.session_state:
         # Initialize the session state

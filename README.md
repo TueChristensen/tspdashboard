@@ -9,7 +9,7 @@ Host on Streamlit https://travellingsalesman.streamlit.app/
 
 To run this locally having all the dependencies installed, you can run the following command (using poetry):
 
-```poetry run streamlit run tspdashboard/main.py```
+```poetry run streamlit run run_app.py```
 
 Omit the `poetry run` if you have the dependencies installed globally or are directly in the virtual environment.
 

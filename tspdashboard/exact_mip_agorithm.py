@@ -68,7 +68,7 @@ def build_model(distance_matrix: np.ndarray) -> Tuple[mathopt.Model, dict]:
 def exact_algorithm(
     distance_matrix: np.ndarray,
     solver_type: mathopt.SolverType = mathopt.SolverType.GSCIP,
-    solve_time_limit: timedelta = timedelta(seconds=30),
+    solve_time_limit: timedelta = timedelta(seconds=120),
 ) -> Tuple[List[int], float]:
     """Build a TSP model and solve it using the given solver type."""
 
