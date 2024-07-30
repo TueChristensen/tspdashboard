@@ -60,5 +60,17 @@ fi
 
 echo Pytest successful
 
+# Make poetry freeze to check for dependencies
+poetry export --without-hashes --format=requirements.txt > requirements.txt
+
+poetry_freeze_exit_code=$?
+
+if [ $poetry_freeze_exit_code -ne 0 ]; then
+
+  echo "Poetry freezing of requirements.txt failed, exiting the script with status {poetry_freeze_exit_code}"
+
+  exit $pytest_exit_code
+fi
+
 echo Ran all checks successfully, exiting 0
 exit 0

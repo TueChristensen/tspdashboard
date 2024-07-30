@@ -19,16 +19,14 @@ This project uses poetry for dependency management. To install the dependencies,
 
 ```poetry install```
 
+or use the `requirements.txt` file to install the dependencies using pip:
+
+```pip install -r requirements.txt```
+
 To run formatting, linting and tests use the following command:
 
 ``` poetry run ./run_tests_formatting_and_linting.sh```
 
-## Todo
+You NEED the plugin for freezing dependencies to work. To install it, run the following command:
 
-1. Add metrics for the greedy and optimal
-1. Add test for the main app
-1. Dockerize the app with buildx for multi-arch support
-1. Update readme with 
-   1. How to run the app
-   2. Formatting and linting
-   
+```poetry self add poetry-plugin-export``` 
