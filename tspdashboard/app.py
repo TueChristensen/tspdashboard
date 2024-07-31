@@ -199,7 +199,7 @@ def main() -> None:
             placeholder="Number of cities",
             min_value=2,
             value=10,
-            max_value=50,
+            max_value=30,
             label_visibility="collapsed",
         )
     with col3:
