@@ -1,27 +1,31 @@
-[tool.poetry]
+[project]
 name = "tspdashboard"
 version = "0.1.0"
 description = "This is a streamlit app that gives the user the ability to generate simple Travelling Salesperson Problem (TSP) instances and solve them with different algorithms and visiualize the results"
-authors = ["Tue Christensen <tue@qampo.com>"]
+authors = [{ name = "Tue Christensen", email = "tue@qampo.com" }]
 readme = "README.md"
+requires-python = ">=3.11,<4.0"
+dependencies = [
+  "ortools>=9.15.6755",
+  "streamlit>=1.58.0",
+  "numpy>=2.3.4",
+  "matplotlib>=3.10.7",
+  "watchdog>=6.0.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-ortools = "^9.10.4067"
-streamlit = "^1.36.0"
-numpy = "^2.0.1"
-matplotlib = "^3.9.1"
-watchdog = "^4.0.1"
+[project.scripts]
+tspdashboard = "tspdashboard.app:main"
 
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.5.4"
-mypy = "^1.11.0"
-pytest = "^8.3.1"
+[dependency-groups]
+dev = [
+  "ruff>=0.14.0",
+  "mypy>=1.18.0",
+  "pytest>=8.4.0",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff]
 line-length = 88
@@ -88,10 +92,6 @@ select = [
 ]
 
 ignore = ['ISC001', 'PLR2004', 'PT011']
-
-[tool.poetry.scripts]
-tspdashboard = "tspdashboard:main"
-
 
 [tool.mypy]
 

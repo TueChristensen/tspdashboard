@@ -7,27 +7,25 @@ Host on Streamlit https://travellingsalesman.streamlit.app/
 
 ## How to run
 
-To run this locally having all the dependencies installed, you can run the following command (using poetry):
+To run this locally having all the dependencies installed, you can run the following command (using uv):
 
-```poetry run streamlit run run_app.py```
+```uv run streamlit run run_app.py```
 
-Omit the `poetry run` if you have the dependencies installed globally or are directly in the virtual environment.
+Omit the `uv run` if you have the dependencies installed globally or are directly in the virtual environment.
 
 
 ## Development
 
-This project uses poetry for dependency management. To install the dependencies, run the following command:
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management. To install the dependencies (including the dev tools), run the following command:
 
-```poetry install```
+```uv sync```
 
-or use the `requirements.txt` file to install the dependencies using pip:
+or use the `requirements.txt` file to install the runtime dependencies using pip:
 
 ```pip install -r requirements.txt```
 
 To run formatting, linting and tests use the following command:
 
-``` poetry run ./run_tests_formatting_and_linting.sh```
+```uv run ./run_tests_formatting_and_linting.sh```
 
-You NEED the plugin for freezing dependencies to work. To install it, run the following command:
-
-```poetry self add poetry-plugin-export``` 
+The `requirements.txt` file is regenerated from the lockfile by that script via `uv export`. No extra plugins are required.
