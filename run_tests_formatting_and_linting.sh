@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# You probably need to run this with poetry run bash run_tests_formatting_and_linting.sh
+# You probably need to run this with uv run bash run_tests_formatting_and_linting.sh
 
 # Run ruff formatting
 
@@ -60,16 +60,16 @@ fi
 
 echo Pytest successful
 
-# Make poetry freeze to check for dependencies
-poetry export --without-hashes --format=requirements.txt > requirements.txt
+# Freeze the runtime dependencies into requirements.txt (used for deployment)
+uv export --no-hashes --no-dev --no-emit-project --format requirements-txt -o requirements.txt
 
-poetry_freeze_exit_code=$?
+uv_export_exit_code=$?
 
-if [ $poetry_freeze_exit_code -ne 0 ]; then
+if [ $uv_export_exit_code -ne 0 ]; then
 
-  echo "Poetry freezing of requirements.txt failed, exiting the script with status {poetry_freeze_exit_code}"
+  echo "uv export of requirements.txt failed, exiting the script with status {$uv_export_exit_code}"
 
-  exit $pytest_exit_code
+  exit $uv_export_exit_code
 fi
 
 echo Ran all checks successfully, exiting 0
