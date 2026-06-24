@@ -74,7 +74,7 @@ def exact_optimize() -> None:
     st.session_state["exact_objective"] = exact_objective
 
 
-@st.experimental_fragment
+@st.fragment
 def map_and_solution_plot() -> None:
     """This is inside a fragment to re-draw the plot without re-running the whole
     script.
@@ -133,7 +133,7 @@ def map_and_solution_plot() -> None:
         )
 
     # Preferably the below would be separated into a different function, but the
-    # current st.experimental_fragment does not seem to allow for this.
+    # current st.fragment does not seem to allow for this.
     if (
         "greedy_objective" in st.session_state
         and st.session_state["greedy_objective"] is not None
@@ -152,11 +152,11 @@ def map_and_solution_plot() -> None:
 
         col1.metric(
             "Distance (exact solution)",
-            f'{st.session_state["exact_objective"]:.2f} ' f'kilometers',
+            f"{st.session_state['exact_objective']:.2f} kilometers",
         )
         col2.metric(
             "Distance (greedy solution)",
-            f'{st.session_state["greedy_objective"]:.2f} kilometers',
+            f"{st.session_state['greedy_objective']:.2f} kilometers",
             delta=f"{percentage_difference:.2f} %",
             delta_color="inverse",
         )
